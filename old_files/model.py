@@ -1360,26 +1360,26 @@ def run():
             # Update receiver
             optimizer_rec.zero_grad()
             loss_rec.backward()
-            nn.utils.clip_grad_norm(receiver.parameters(), max_norm=1.)
+            nn.utils.clip_grad_norm_(receiver.parameters(), max_norm=1.)
             optimizer_rec.step()
 
             if FLAGS.use_binary:
                 # Update sender
                 optimizer_sen.zero_grad()
                 loss_sen.backward()
-                nn.utils.clip_grad_norm(sender.parameters(), max_norm=1.)
+                nn.utils.clip_grad_norm_(sender.parameters(), max_norm=1.)
                 optimizer_sen.step()
 
                 # Update baseline
                 optimizer_bas_rec.zero_grad()
                 loss_bas_rec.backward()
-                nn.utils.clip_grad_norm(baseline_rec.parameters(), max_norm=1.)
+                nn.utils.clip_grad_norm_(baseline_rec.parameters(), max_norm=1.)
                 optimizer_bas_rec.step()
 
                 # Update baseline
                 optimizer_bas_sen.zero_grad()
                 loss_bas_sen.backward()
-                nn.utils.clip_grad_norm(baseline_sen.parameters(), max_norm=1.)
+                nn.utils.clip_grad_norm_(baseline_sen.parameters(), max_norm=1.)
                 optimizer_bas_sen.step()
 
             # Obtain top-k accuracy

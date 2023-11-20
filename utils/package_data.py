@@ -81,7 +81,25 @@ def basic_block(layer, relu=False):
 class FeatureModel(nn.Module):
     def __init__(self):
         super(FeatureModel, self).__init__()
-        self.fn = get_model()(pretrained=True)
+
+        #get_model() からモデルクラスを取得
+        model_class = get_model()
+
+        if FLAGS.resnet == '18':
+            weights = models.ResNet18_Weights.DEFAULT
+        elif FLAGS.resnet == '34':
+            weights = models.ResNet34_Weights.DEFAULT
+        elif FLAGS.resnet == '50':
+            weights = models.ResNet34_Weights.DEFAULT
+        elif FLAGS.resnet == '101':
+            weights = models.ResNet34_Weights.DEFAULT
+        elif FLAGS.resnet == '152':
+            weights = models.ResNet34_Weights.DEFAULT
+        else:
+            #エラーを発生させる
+            raise ValueError("Unsupported ResNet version")
+
+        self.fn = model_class(weights=weights)
 
         # Turn off inplace
         for p in self.fn.modules():

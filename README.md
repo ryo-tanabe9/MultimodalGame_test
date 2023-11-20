@@ -2,20 +2,13 @@
 
 This is a framework for studying multi-agent emergent communication.
 
-## Table of contents
-1. [Installation](#installation)
-2. [Data](#data)  
-    2.1. [Training data](#data)  
-    2.2. [Building datasets](#builddata)  
-    2.3. [About ShapeWorld](#aboutshapeworld)  
-    2.4. [Example Data](#exampledata)  
-3. [Training Agents](#training)  
-    3.1. [Basic case](#basic)  
-    3.2. [Agent pools](#pools)  
-    3.3. [Agent communities](#communities)  
-    3.4. [Evaluating agents](#eval)  
-    3.5. [Generating messages](#messages)  
-    3.6. [Helpful bash scripts to analyze log files](#bash)
+This README.md is made from [here](https://github.com/lgraesser/MultimodalGame).
+
+<a name="Execution Environment"></a>
+## Execution Environment
+
+- conda version : 23.7.4
+- python version : 3.11.5
 
 <a name="installation"></a>
 ## Installation
@@ -27,23 +20,14 @@ git clone --recurse-submodules https://github.com/lgraesser/MultimodalGame.git
 cd MultimodalGame
 # Install dependencies
 conda create --name emergent_comms
-source activate emergent_comms
+conda activate emergent_comms
 conda install pytorch torchvision -c pytorch
 pip install -r requirements.txt
 # Install ShapeWorld
 pip install -e ShapeWorld
 ```
 
-### Dependencies
 
-- pyTorch
-- h5py
-- numpy
-- python-gflags
-- tqdm
-- scikit-image
-- sklearn
-- tensorflow
 
 <a name="data"></a>
 ## Training data
@@ -57,64 +41,7 @@ This model used ShapeWorld datasets. All the datasets used in this project are a
 
 See example training and evaluation scripts below for more details of how to use these datasets.
 
-<a name="builddata"></a>
-### Building the datasets
-
-To generate an example dataset run the following command. This generates 500 examples and is the same format as the training dataset "oneshape" used for this project, available [here](https://drive.google.com/drive/folders/1p0GtLX_Y_w78zWoc9Qe8jFPniLOtkr1E?usp=sharing).
-
-```
-mkdir data
-cd ShapeWorld
-./build_datasets.sh
-cd ..
-```
-
 The models also depend on pre-trained word embeddings. We recommend using the `6B.100d` GloVe embeddings available [here](https://nlp.stanford.edu/projects/glove/).
-
-<a name="aboutshapeworld"></a>
-### About ShapeWorld
-
-ShapeWorld is a framework which allows to specify generators for abstract, visually grounded language data (or just visual data).
-
-It was written by *Alexander Kuhnle and Ann Copestake* (April 2017) and adapted by *Laura Graesser* for this project.
-
-If you use ShapeWorld in your work, please cite:
-
-> **ShapeWorld: A new test methodology for multimodal language understanding** ([arXiv](https://arxiv.org/abs/1704.04517))
-> *Alexander Kuhnle and Ann Copestake* (April 2017)
-
-For more details, please see the [original repository](https://github.com/AlexKuhnle/ShapeWorld)
-
-<a name="exampledata"></a>
-### Example Data
-
-**Images**
-![ims](./readme_figs/example_ims_orig.png)
-
-**Partitioned Images**
-(Partitions randomly generated at run time)
-
-*Partition 1*
-![pims_1](./readme_figs/example_ims_1.png)
-
-*Partition 2*
-![pims_2](./readme_figs/example_ims_2.png)
-
-**Correct Description**
-
-- there is a yellow semicircle
-- there is a red shape
-- there is an ellipse
-- there is a yellow triangle
-- there is a pentagon
-
-**Texts**
-
-- ['there is a yellow shape . ', 'there is a green shape . ', 'there is a semicircle .  ', 'there is a red circle . ', 'there is a cyan triangle . ', 'there is a triangle .  ', 'there is a yellow semicircle . ', 'there is a yellow shape . ', 'there is a green pentagon . ', 'there is a cyan shape . ']
-- ['there is a cyan cross . ', 'there is a semicircle .  ', 'there is a square .  ', 'there is a yellow pentagon . ', 'there is a yellow circle . ', 'there is a cyan cross . ', 'there is a red cross . ', 'there is a green rectangle . ', 'there is a red shape . ', 'there is a magenta ellipse . ']
-- ['there is a cyan rectangle . ', 'there is a red pentagon . ', 'there is a rectangle .  ', 'there is a green cross . ', 'there is a yellow ellipse . ', 'there is a blue shape . ', 'there is a gray shape . ', 'there is a red pentagon . ', 'there is an ellipse .  ', 'there is a magenta shape . ']
-- ['there is a pentagon .  ', 'there is a blue rectangle . ', 'there is a gray pentagon . ', 'there is a magenta shape . ', 'there is a cyan shape . ', 'there is a red rectangle . ', 'there is a yellow triangle . ', 'there is a green ellipse . ', 'there is a magenta ellipse . ', 'there is a magenta shape . ']
-- ['there is an ellipse .  ', 'there is a red semicircle . ', 'there is a magenta circle . ', 'there is a gray shape . ', 'there is a pentagon .  ', 'there is a red shape . ', 'there is a gray shape . ', 'there is a blue shape . ', 'there is a green shape . ', 'there is a cyan shape . ']
 
 <a name="training"></a>
 ## Training agents
@@ -128,7 +55,12 @@ Agents can be trained in three configurations.
     - e.g. 5 pools, with indices 1, 2, 3, 4, 5. Agents in pool 1 are connected only to agents in pool 2, where as agents in pool 2 are connected to agents in pool 1 and 3.
 
 
-Note: these examples assume that you have downloaded the data from [here](https://drive.google.com/drive/folders/1p0GtLX_Y_w78zWoc9Qe8jFPniLOtkr1E?usp=sharing) and have organized it using the following file structure.
+Note: these examples assume that you have downloaded the data from [here](https://drive.google.com/drive/folders/1p0GtLX_Y_w78zWoc9Qe8jFPniLOtkr1E?usp=sharing) and [here](https://nlp.stanford.edu/projects/glove/) and have organized it using the following file structure.
+
+```
+mkdir data
+mkdir glove
+```
 
 MultimodalGame  
 --> data  
